@@ -11,10 +11,10 @@
 
 ///  NEURAL NETWORK PARAMETERS  -------------------------------------------------------------------------
 
-constexpr int neural_net_array[] = { 2,10,10,10,2 }; // Define quantos neurons havera por camada
+constexpr int neural_net_array[] = { 4,5,4,3,2 }; // Define quantos neurons havera por camada
 // funcoes disponiveis para usar: Tanh, Leaky_ReLu, Linear, ReLu
-#define       FUNCTION_FWDP     Tanh   // Define qual funcao sera usada para a operacao forward_pass
-#define       FUNCTION_OUTPUT   Tanh             // Define qual funcao sera usada para a ativacao na saida
+#define       FUNCTION_FWDP     ReLu   // Define qual funcao sera usada para a operacao forward_pass
+#define       FUNCTION_OUTPUT   Linear             // Define qual funcao sera usada para a ativacao na saida
 // funcoes disponiveis para usar: Quadratic_error
 #define       ERROR_FUNCTION    Quadratic_error      // Define qual funcar sera usada para calcular o erro
 constexpr float learning_rate = 0.03f;                       // Define a taxa de aprendizado da rede neural

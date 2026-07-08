@@ -7,7 +7,7 @@
 //-------------------------------------------------------------------------------------------------------
 /// Construtor padrao da rede neural
 NeuralNetwork::NeuralNetwork() {
-	srand((unsigned int)time(NULL));
+	srand(rand() + (unsigned int)time(NULL));
 	int i;
 	index_max_output = 0;
 	for (i = 0; i < weights_array_size; i++)
@@ -28,7 +28,7 @@ NeuralNetwork::NeuralNetwork() {
 NeuralNetwork::NeuralNetwork(const char* name_of_file) {
 	FILE* arquivo;
 	if(fopen_s(&arquivo, name_of_file, "r")) exit(1);
-	srand((unsigned int)time(NULL));
+	srand(rand() + (unsigned int)time(NULL));
 	int i;
 	index_max_output = 0;
 	for (i = 0; i < weights_array_size; i++)
