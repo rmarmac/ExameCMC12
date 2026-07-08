@@ -1,0 +1,4 @@
+﻿  funcoes_fwdp_e_custo.cpp
+  Main.cpp
+  neuralnet.cpp
+C:\Projetos C++\Visual Studio\Rede Neural\Rede Neural\Main.cpp(3,10): error C1083: Não é possível abrir arquivo incluir: 'SFML/Graphics.hpp': No such file or directory
