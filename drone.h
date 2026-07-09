@@ -3,11 +3,8 @@
 #include <math.h>
 #include <SFML/Graphics.hpp>
 #include "vector.h"
+#include "configs.h"
 
-#define LENGTH 0.2
-#define HEIGHT 0.02
-#define	J 0.04
-#define MASS 0.5
 
 
 // força máxima do drone é 1.8mg

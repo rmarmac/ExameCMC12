@@ -54,10 +54,10 @@ double AvaliarPontuacao(vector_t posicao_drone, vector_t posicao_target) {
     double delta_x = posicao_target.x - posicao_drone.x;
     double delta_y = posicao_target.y - posicao_drone.y;
     double distance_sqr = delta_x * delta_x + delta_y * delta_y;
-    if (distance_sqr < min_dist_sqr)
-        distance_sqr = min_dist_sqr;
-    return (WINDOW_WIDTH * WINDOW_WIDTH + WINDOW_HEIGHT * WINDOW_HEIGHT) / distance_sqr;
+    double max_distance = WINDOW_WIDTH * WINDOW_WIDTH + WINDOW_HEIGHT * WINDOW_HEIGHT;
+    return max_distance/(1 + distance_sqr);
 }
+
 
 
 void ControlarDrones(agent_t v[], Target& target) {
@@ -66,13 +66,17 @@ void ControlarDrones(agent_t v[], Target& target) {
     for (size_t i = 0; i < N_AGENTS; i++)
         if (v[i].alive) {
             vector_t posicao_drone = v[i].drone.GetPosition();
-            inputs[0] = (float)(posicao_target.x - posicao_drone.x);
-            inputs[1] = (float)(posicao_target.y - posicao_drone.y);
-            inputs[2] = (float)v[i].drone.GetOmega();
-            inputs[3] = (float)v[i].drone.GetTheta();
+            inputs[0] = (float)(posicao_target.x - posicao_drone.x) / WINDOW_WIDTH;
+            inputs[1] = (float)(posicao_target.y - posicao_drone.y) / WINDOW_HEIGHT;
+            //inputs[0] = (float)(posicao_drone.x) / WINDOW_WIDTH;
+            //inputs[1] = (float)(posicao_target.y) / WINDOW_HEIGHT;
+            inputs[2] = (float)v[i].drone.GetOmega() / PI;
+            inputs[3] = (float)v[i].drone.GetTheta() / PI;
 
             v[i].net.Forward_Pass(inputs);
-            v[i].drone.ApplyForces(v[i].net.outputs[0], v[i].net.outputs[1]);
+            double torque = v[i].net.outputs[0];
+            double F = v[i].net.outputs[1];
+            v[i].drone.ApplyForces(F/2 + torque / LENGTH, F / 2 - torque / LENGTH);
         }
 }
 
@@ -99,9 +103,9 @@ void Evolve(generation_t& gen_atual, generation_t& next_gen) {
         
 
         NeuralNetwork aux(gen_atual.agents[selecao1].net, gen_atual.agents[selecao2].net);
-        next_gen.agents[i].net = aux;
+        aux.TransferData(next_gen.agents[i].net);
     }
     for (int i = N_AGENTS - PRESERVE; i < N_AGENTS; i++)
-        next_gen.agents[i].net = gen_atual.agents[i].net;
+        gen_atual.agents[i].net.TransferData(next_gen.agents[i].net);
     
 }

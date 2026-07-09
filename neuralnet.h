@@ -13,7 +13,7 @@
 
 constexpr int neural_net_array[] = { 4,5,4,3,2 }; // Define quantos neurons havera por camada
 // funcoes disponiveis para usar: Tanh, Leaky_ReLu, Linear, ReLu
-#define       FUNCTION_FWDP     ReLu   // Define qual funcao sera usada para a operacao forward_pass
+#define       FUNCTION_FWDP     Leaky_ReLu   // Define qual funcao sera usada para a operacao forward_pass
 #define       FUNCTION_OUTPUT   Linear             // Define qual funcao sera usada para a ativacao na saida
 // funcoes disponiveis para usar: Quadratic_error
 #define       ERROR_FUNCTION    Quadratic_error      // Define qual funcar sera usada para calcular o erro
@@ -43,6 +43,7 @@ public:
 	void Print_neurons() const;
 	void Print_outputs() const;
 	void Save_To_File(const char* name_of_file) const;
+	void TransferData(NeuralNetwork& other_net) const;
 	float* outputs;
 	float weights[weights_array_size];
 	int   index_max_output;

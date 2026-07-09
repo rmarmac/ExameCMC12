@@ -2,8 +2,7 @@
 #include "assets.h"
 #include <numbers>
 
-#define PI 3.14159265358979
-#define GRAVITY 9.81
+
 
 Drone::Drone() : force_left(0), force_right(0), theta(0), omega(0) {
 	velocity.x = 0;

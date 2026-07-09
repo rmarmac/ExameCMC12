@@ -1,4 +1,5 @@
 #include "neuralnet.h"
+#include "configs.h"
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -56,7 +57,7 @@ NeuralNetwork::NeuralNetwork(NeuralNetwork& father, NeuralNetwork& mother) {
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> distrib(0.0, 1.0);
 	index_max_output = 0;
-	const float threshold = 0.05;
+	const float threshold = MUTATION_THRESHOLD;
 	for (i = 0; i < (weights_array_size >> 1); i++)
 	{
 		if ((float)distrib(gen) < threshold)
@@ -106,6 +107,11 @@ void NeuralNetwork::Save_To_File(const char* name_of_file) const {
 		}
 	}
 	fclose(arquivo);
+}
+//-------------------------------------------------------------------------------------------------------
+/// Transfere os dados de si para outra rede neural
+void NeuralNetwork::TransferData(NeuralNetwork& other_net) const {
+	memcpy(other_net.weights, weights, weights_array_size * sizeof(float));
 }
 //-------------------------------------------------------------------------------------------------------
 /// Imprime na tela as atuais saidas produzidas por cada neuron
