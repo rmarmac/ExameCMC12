@@ -21,7 +21,7 @@ void troca(agent_t v[], int i, int j);
 int Partition(agent_t v[], int comeco, int fim);
 void QuickSort(agent_t v[], int min, int max);
 void ResetAgents(agent_t v[]);
-double AvaliarPontuacao(vector_t posicao_drone, vector_t posicao_target);
+double AvaliarPontuacao(Drone drone, vector_t posicao_target);
 void ControlarDrones(agent_t v[], Target &target);
 
 void Evolve(generation_t& gen_atual, generation_t& next_gen);

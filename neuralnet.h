@@ -11,7 +11,7 @@
 
 ///  NEURAL NETWORK PARAMETERS  -------------------------------------------------------------------------
 
-constexpr int neural_net_array[] = { 4,5,4,3,2 }; // Define quantos neurons havera por camada
+constexpr int neural_net_array[] = { 6,5,4,3,2 }; // Define quantos neurons havera por camada
 // funcoes disponiveis para usar: Tanh, Leaky_ReLu, Linear, ReLu
 #define       FUNCTION_FWDP     Tanh   // Define qual funcao sera usada para a operacao forward_pass
 #define       FUNCTION_OUTPUT   Tanh             // Define qual funcao sera usada para a ativacao na saida
