@@ -34,6 +34,7 @@ class NeuralNetwork {
 public:
 	NeuralNetwork();
 	NeuralNetwork(const char* name_of_file);
+	NeuralNetwork(NeuralNetwork& father, NeuralNetwork& mother);
 	void Fwdp_and_Back_propagate(const float inputs[], const float desired_outputs[]);
 	void Train_Batch(const float inputs[][input_size], const float desired_outputs[][output_size], const int batch_size);
 	void Forward_Pass(const float inputs[]);
@@ -43,13 +44,13 @@ public:
 	void Print_outputs() const;
 	void Save_To_File(const char* name_of_file) const;
 	float* outputs;
+	float weights[weights_array_size];
 	int   index_max_output;
 private:
 	int   n_offsets[neural_net_size];
 	int   w_offsets[neural_net_size - 1];
 	float neurons[neurons_array_size];
 	float derivatives_neurons[neurons_array_size] = { 0 };
-	float weights[weights_array_size];
 	float derivatives_weights[weights_array_size] = { 0 };
 	void (*error_function)(const float[], const float[], float[], const int) = ERROR_FUNCTION;
 	FUNCTION_FWDP function_fwdp;

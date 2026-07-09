@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Agents.cpp" />
     <ClCompile Include="assets.cpp" />
     <ClCompile Include="funcoes_fwdp_e_custo.cpp" />
     <ClCompile Include="drone.cpp" />
@@ -141,7 +142,9 @@
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Agents.h" />
     <ClInclude Include="assets.h" />
+    <ClInclude Include="configs.h" />
     <ClInclude Include="fileop.h" />
     <ClInclude Include="funcoes_fwdp_e_custo.h" />
     <ClInclude Include="drone.h" />

@@ -35,21 +35,24 @@ double Drone::GetOmega() const {
 	return omega;
 }
 
-void Drone::Draw(sf::RenderWindow* window, Assets assets) {
+void Drone::Draw(sf::RenderWindow* window, Assets assets, bool draw_forces = true) {
 	drone_assets_t drone_assets = assets.base_drone_assets;
 	double visual_length = LENGTH * visual_scale_factor_drone;
 
 	drone_assets.drone_body.setPosition(position.x, position.y);
 	drone_assets.drone_body.setRotation(theta * 180 / PI);
-	drone_assets.visual_f_left.scale(sf::Vector2f(force_left, 1));
-	drone_assets.visual_f_left.setPosition(position.x - visual_length / 2 * cos(theta), position.y - visual_length / 2 * sin(theta));
-	drone_assets.visual_f_left.setRotation(theta * 180 / PI - 90);
-	drone_assets.visual_f_right.scale(sf::Vector2f(force_right, 1));
-	drone_assets.visual_f_right.setPosition(position.x + visual_length / 2 * cos(theta), position.y + visual_length / 2 * sin(theta));
-	drone_assets.visual_f_right.setRotation(theta * 180 / PI - 90);
 	(*window).draw(drone_assets.drone_body);
-	(*window).draw(drone_assets.visual_f_left);
-	(*window).draw(drone_assets.visual_f_right);
+	if (draw_forces) {
+		drone_assets.visual_f_left.scale(sf::Vector2f(force_left, 1));
+		drone_assets.visual_f_left.setPosition(position.x - visual_length / 2 * cos(theta), position.y - visual_length / 2 * sin(theta));
+		drone_assets.visual_f_left.setRotation(theta * 180 / PI - 90);
+		drone_assets.visual_f_right.scale(sf::Vector2f(force_right, 1));
+		drone_assets.visual_f_right.setPosition(position.x + visual_length / 2 * cos(theta), position.y + visual_length / 2 * sin(theta));
+		drone_assets.visual_f_right.setRotation(theta * 180 / PI - 90);
+
+		(*window).draw(drone_assets.visual_f_left);
+		(*window).draw(drone_assets.visual_f_right);
+	}
 }
 
 void Drone::ApplyForces(double f_left, double f_right) {

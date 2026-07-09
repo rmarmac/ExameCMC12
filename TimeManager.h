@@ -1,8 +1,8 @@
 #pragma once
 #include <stdlib.h>
 #include <profileapi.h>
+#include "configs.h"
 
-#define MAX_DELTA_T 0.01
 
 typedef struct {
     LARGE_INTEGER qpcFreq, qpcStart, qpcCurrent;

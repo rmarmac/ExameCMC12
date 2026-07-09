@@ -19,7 +19,7 @@ public:
 	vector_t GetVelocity() const;
 	double GetTheta() const;
 	double GetOmega() const;
-	void Draw(sf::RenderWindow* window, Assets assets);
+	void Draw(sf::RenderWindow* window, Assets assets, bool draw_forces);
 	void ApplyForces(double force_left, double force_right);
 	void Update(double delta_t);
 	void Reset(double x, double y);

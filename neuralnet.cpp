@@ -2,16 +2,20 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <random>
+
 #define w_position(matrix,line,column) (w_offsets[matrix] + line * (neural_net_array[matrix] + 1) + column) 
 #define n_position(layer,line) (n_offsets[layer] + line)
 //-------------------------------------------------------------------------------------------------------
 /// Construtor padrao da rede neural
 NeuralNetwork::NeuralNetwork() {
-	srand(rand() + (unsigned int)time(NULL));
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> distrib(-1.0, 1.0);
 	int i;
 	index_max_output = 0;
 	for (i = 0; i < weights_array_size; i++)
-		weights[i] = (rand() % 200 - 100) / 100.0f;
+		weights[i] = (float)distrib(gen);
 	w_offsets[0] = n_offsets[0] = 0;
 	for (i = 0; i < neural_net_size - 2; i++) {
 		w_offsets[i + 1] = (neural_net_array[i] + 1) * neural_net_array[i + 1] + w_offsets[i];
@@ -28,12 +32,45 @@ NeuralNetwork::NeuralNetwork() {
 NeuralNetwork::NeuralNetwork(const char* name_of_file) {
 	FILE* arquivo;
 	if(fopen_s(&arquivo, name_of_file, "r")) exit(1);
-	srand(rand() + (unsigned int)time(NULL));
 	int i;
 	index_max_output = 0;
 	for (i = 0; i < weights_array_size; i++)
 		if(!fscanf_s(arquivo, "%f", &(weights[i]))) exit(2);
 	fclose(arquivo);
+	w_offsets[0] = n_offsets[0] = 0;
+	for (i = 0; i < neural_net_size - 2; i++) {
+		w_offsets[i + 1] = (neural_net_array[i] + 1) * neural_net_array[i + 1] + w_offsets[i];
+		n_offsets[i + 1] = neural_net_array[i] + n_offsets[i] + 1;
+		// Neurons relativos ao bias tem valor constante e igual a 1.0f
+		neurons[n_offsets[i + 1] - 1] = 1.0f;
+	}
+	n_offsets[neural_net_size - 1] = neural_net_array[neural_net_size - 2] + n_offsets[neural_net_size - 2] + 1;
+	neurons[n_offsets[neural_net_size - 1] - 1] = 1.0f;
+	outputs = &(neurons[n_position(neural_net_size - 1, 0)]);
+}
+//-------------------------------------------------------------------------------------------------------
+/// Combinação para algoritmo genético
+NeuralNetwork::NeuralNetwork(NeuralNetwork& father, NeuralNetwork& mother) {
+	int i;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> distrib(0.0, 1.0);
+	index_max_output = 0;
+	const float threshold = 0.01;
+	for (i = 0; i < (weights_array_size >> 1); i++)
+	{
+		if ((float)distrib(gen) < threshold)
+			weights[i] = (float)distrib(gen) * 2.f - 1.f;
+		else
+			weights[i] = father.weights[i];
+	}
+	for (i = (weights_array_size >> 1); i < weights_array_size; i++)
+	{
+		if ((float)distrib(gen) < threshold)
+			weights[i] = (float)distrib(gen) * 2.f - 1.f;
+		else
+			weights[i] = mother.weights[i];
+	}
 	w_offsets[0] = n_offsets[0] = 0;
 	for (i = 0; i < neural_net_size - 2; i++) {
 		w_offsets[i + 1] = (neural_net_array[i] + 1) * neural_net_array[i + 1] + w_offsets[i];
