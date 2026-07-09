@@ -7,7 +7,8 @@
 #define MAX_DELTA_T 0.01
 #define N_AGENTS 50
 #define PRESERVE 5
-#define FORCE_FACTOR 5
+#define MAX_FORCE 10
+#define MAX_TORQUE 2
 #define MUTATION_THRESHOLD 0.005f
 
 /// Configurações do Drone

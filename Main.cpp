@@ -24,8 +24,8 @@ int main() {
     double delta_t = 0;
 
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
-    window.setFramerateLimit(240);
-    bool treinando = false;
+    window.setFramerateLimit(0);
+    bool treinando = true;
 
     size_t entidades_vivas = N_AGENTS;
 
@@ -83,12 +83,12 @@ int main() {
         if (not entidades_vivas) {
             target.SetPosition((float)distrib(gen) * WINDOW_WIDTH / 3 + WINDOW_WIDTH / 3, (float)distrib(gen) * WINDOW_HEIGHT / 3 + WINDOW_HEIGHT / 3);
             entidades_vivas = N_AGENTS;
-            //if (treinando) {
+            if (treinando) {
                 QuickSort(gen_atual.agents, 0, N_AGENTS - 1);
                 Evolve(gen_atual, next_gen);
                 for (size_t i = 0; i < N_AGENTS; i++)
                     next_gen.agents[i].net.TransferData(gen_atual.agents[i].net);
-            //}
+            }
             ResetAgents(gen_atual.agents);
         }
 

@@ -55,7 +55,7 @@ double AvaliarPontuacao(vector_t posicao_drone, vector_t posicao_target) {
     double delta_y = posicao_target.y - posicao_drone.y;
     double distance_sqr = delta_x * delta_x + delta_y * delta_y;
     double max_distance = WINDOW_WIDTH * WINDOW_WIDTH + WINDOW_HEIGHT * WINDOW_HEIGHT;
-    return max_distance/(1 + distance_sqr);
+    return 2 * max_distance/(max_distance + distance_sqr);
 }
 
 
@@ -74,8 +74,8 @@ void ControlarDrones(agent_t v[], Target& target) {
             inputs[3] = (float)v[i].drone.GetTheta() / PI;
 
             v[i].net.Forward_Pass(inputs);
-            double torque = v[i].net.outputs[0];
-            double F = v[i].net.outputs[1];
+            double torque = MAX_TORQUE * v[i].net.outputs[0];
+            double F = MAX_FORCE * v[i].net.outputs[1];
             v[i].drone.ApplyForces(F/2 + torque / LENGTH, F / 2 - torque / LENGTH);
         }
 }
