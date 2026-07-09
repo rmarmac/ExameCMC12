@@ -24,8 +24,8 @@ int main() {
     double delta_t = 0;
 
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "TEST");
-    window.setFramerateLimit(240);
-    bool treinando = false;
+    window.setFramerateLimit(0);
+    bool treinando = true;
 
     size_t entidades_vivas = N_AGENTS;
 
@@ -61,34 +61,38 @@ int main() {
         
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Update da física
-        delta_t = time_manager.Update();
-        printf("%lf\n", delta_t);
 
-        if (treinando) {
-            delta_t = 0.005;
-            ControlarDrones(gen_atual.agents, target);
-            for (size_t i = 0; i < N_AGENTS; i++) {
-                if (gen_atual.agents[i].alive) {
-                    gen_atual.agents[i].pontuacao += delta_t * AvaliarPontuacao(gen_atual.agents[i].drone.GetPosition(), target.GetPosition());
-                    gen_atual.agents[i].drone.Update(delta_t);
-                    vector_t position = gen_atual.agents[i].drone.GetPosition();
-                    if (position.x < 0 || position.x > WINDOW_WIDTH || position.y < 0 || position.y > WINDOW_HEIGHT) {
-                        gen_atual.agents[i].alive = false;
-                        --entidades_vivas;
-                    }
+        if (treinando)
+            delta_t = 0.005; 
+        else
+            delta_t = time_manager.Update();
+            
+        ControlarDrones(gen_atual.agents, target);
+        for (size_t i = 0; i < N_AGENTS; i++) {
+            if (gen_atual.agents[i].alive) {
+                gen_atual.agents[i].pontuacao += delta_t * AvaliarPontuacao(gen_atual.agents[i].drone.GetPosition(), target.GetPosition());
+                gen_atual.agents[i].drone.Update(delta_t);
+                vector_t position = gen_atual.agents[i].drone.GetPosition();
+                if (position.x < 0 || position.x > WINDOW_WIDTH || position.y < 0 || position.y > WINDOW_HEIGHT) {
+                    gen_atual.agents[i].alive = false;
+                    --entidades_vivas;
                 }
             }
         }
-        for (agent_t& agent : gen_atual.agents)
-            agent.drone.Draw(&window, assets, true);
         if (not entidades_vivas) {
-            target.SetPosition((float)distrib(gen) * WINDOW_WIDTH / 2 + WINDOW_WIDTH / 4, (float)distrib(gen) * WINDOW_HEIGHT / 2 + WINDOW_HEIGHT / 4);
+            target.SetPosition((float)distrib(gen) * WINDOW_WIDTH / 3 + WINDOW_WIDTH / 3, (float)distrib(gen) * WINDOW_HEIGHT / 3 + WINDOW_HEIGHT / 3);
             entidades_vivas = N_AGENTS;
-            QuickSort(gen_atual.agents, 0, N_AGENTS - 1);
-            Evolve(gen_atual, next_gen);
-            gen_atual = next_gen;
+            if (treinando) {
+                QuickSort(gen_atual.agents, 0, N_AGENTS - 1);
+                Evolve(gen_atual, next_gen);
+                gen_atual = next_gen;
+            }
             ResetAgents(gen_atual.agents);
         }
+
+        for (agent_t& agent : gen_atual.agents)
+            agent.drone.Draw(&window, assets, true);
+        
             
         // ------------------------------------------------------------------------------------------------------------------------------------------------------------
         

@@ -56,7 +56,7 @@ NeuralNetwork::NeuralNetwork(NeuralNetwork& father, NeuralNetwork& mother) {
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> distrib(0.0, 1.0);
 	index_max_output = 0;
-	const float threshold = 0.01;
+	const float threshold = 0.05;
 	for (i = 0; i < (weights_array_size >> 1); i++)
 	{
 		if ((float)distrib(gen) < threshold)
