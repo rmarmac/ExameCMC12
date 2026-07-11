@@ -10,9 +10,10 @@
 //-------------------------------------------------------------------------------------------------------
 /// Construtor padrao da rede neural
 NeuralNetwork::NeuralNetwork() {
+	// Setup para variáveis aleatórias
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> distrib(-1.0, 1.0);
+	std::uniform_real_distribution<float> distrib(-2.0, 2.0);
 	int i;
 	index_max_output = 0;
 	for (i = 0; i < weights_array_size; i++)
@@ -53,6 +54,7 @@ NeuralNetwork::NeuralNetwork(const char* name_of_file) {
 /// Combinação para algoritmo genético
 NeuralNetwork::NeuralNetwork(NeuralNetwork& father, NeuralNetwork& mother) {
 	int i;
+	// Setup para variáveis aleatórias
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> distrib(0.0, 1.0);
@@ -61,14 +63,14 @@ NeuralNetwork::NeuralNetwork(NeuralNetwork& father, NeuralNetwork& mother) {
 	for (i = 0; i < (weights_array_size >> 1); i++)
 	{
 		if ((float)distrib(gen) < threshold)
-			weights[i] = (float)distrib(gen) * 2.f - 1.f;
+			weights[i] = (float)distrib(gen) * 4.f - 2.f;
 		else
 			weights[i] = father.weights[i];
 	}
 	for (i = (weights_array_size >> 1); i < weights_array_size; i++)
 	{
 		if ((float)distrib(gen) < threshold)
-			weights[i] = (float)distrib(gen) * 2.f - 1.f;
+			weights[i] = (float)distrib(gen) * 4.f - 2.f;
 		else
 			weights[i] = mother.weights[i];
 	}
@@ -135,6 +137,7 @@ void NeuralNetwork::Forward_Pass(const float inputs[]) {
 	int i;
 	for (i = 0; i < input_size; i++)
 		neurons[i] = inputs[i];
+	// Para cada camada interna, propaga para frente os valores recebidos usando a função definida para function_fwdp
 	for (i = 1; i < neural_net_size - 1; i++)
 		for (int j = 0; j < neural_net_array[i]; j++) {
 			neurons[n_position(i, j)] = 0;
@@ -143,6 +146,7 @@ void NeuralNetwork::Forward_Pass(const float inputs[]) {
 			neurons[n_position(i, j)] = function_fwdp.function(neurons[n_position(i, j)]);
 		}
 	float max_output;
+	// A camada de saída possui uma função não linear própria, ao gosto do usuário, e por isso é tratada separadamente.
 	for (int j = 0; j < output_size; j++) {
 		outputs[j] = 0;
 		for (int k = 0; k < neural_net_array[neural_net_size - 2] + 1; k++)

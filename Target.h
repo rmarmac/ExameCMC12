@@ -1,7 +1,12 @@
 #pragma once
+#include "configs.h"
 #include "assets.h"
 #include "vector.h"
+#include <random>
 
+
+//-------------------------------------------------------------------------------------------------------
+/// Classe para um alvo
 class Target {
 public:
 	Target();
@@ -12,3 +17,5 @@ public:
 private:
 	vector_t position;
 };
+
+void ResetarTargets(Target targets[]);
