@@ -30,3 +30,6 @@ void ControlarDrones(agent_t v[], Target targets[], double delta_t, size_t& enti
 void SeguirMouse(agent_t v[], Target& mouse_target, double delta_t, size_t& entidades_vivas);
 
 void Evolve(generation_t& gen_atual, generation_t& next_gen);
+
+void TreinoA(agent_t& agent, Target& test_target, double tempo_decorrido, double delta_t);
+void TreinoB(agent_t& agent, Target& test_target, double tempo_decorrido, double delta_t);

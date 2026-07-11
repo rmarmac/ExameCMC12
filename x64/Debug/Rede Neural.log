@@ -1,10 +1,1 @@
-﻿  Agents.cpp
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(90,54): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(91,54): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(92,41): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(93,41): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(129,54): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(130,54): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(131,41): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\Rede Neural\Agents.cpp(132,41): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-  Rede Neural.vcxproj -> C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\x64\Debug\Rede Neural.exe
+﻿  Rede Neural.vcxproj -> C:\ITA\Prof\CMC12\EXAME\Rede Neural - Backup_v2\x64\Debug\Rede Neural.exe

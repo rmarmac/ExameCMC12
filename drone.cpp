@@ -2,7 +2,13 @@
 #include "assets.h"
 #include <numbers>
 
+constexpr double upper_limit = 1.8 * MASS * GRAVITY;
+constexpr double lower_limit = 0.2 * MASS * GRAVITY;
 
+double LimitForce(double force) {
+	double adj_force = force > upper_limit ? upper_limit : force;
+	return adj_force < lower_limit ? lower_limit : adj_force;
+}
 //-------------------------------------------------------------------------------------------------------
 /// Construtor base do drone
 Drone::Drone() : force_left(0), force_right(0), theta(0), omega(0) {
@@ -67,8 +73,8 @@ void Drone::Draw(sf::RenderWindow* window, Assets assets, bool draw_forces = tru
 //-------------------------------------------------------------------------------------------------------
 /// Aplica as forças
 void Drone::ApplyForces(double f_left, double f_right) {
-	force_left = f_left;
-	force_right = f_right;
+	force_left = LimitForce(f_left);
+	force_right = LimitForce(f_right);
 }
 //-------------------------------------------------------------------------------------------------------
 /// Dadas as forças e um delta_t, atualiza conforme a física do drone
